@@ -4,6 +4,7 @@ use std::io::{BufRead, BufReader};
 
 type BoxResult<T> = Result<T, Box<dyn Error>>;
 
+/* TODO: Currently not used any more. Can probably be removed */
 #[derive(Debug)]
 pub enum MoveT {
     A,
@@ -62,3 +63,9 @@ pub fn read_rock_paper_scissors_data_from_file(filename: &str) -> BoxResult<Vec<
 
     Ok(results)
 }
+
+/*
+* A = rock = 1
+* B = paper = 2
+* C = scissors = 3
+ */
