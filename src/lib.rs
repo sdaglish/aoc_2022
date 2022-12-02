@@ -4,6 +4,16 @@ use std::io::{BufRead, BufReader};
 
 type BoxResult<T> = Result<T, Box<dyn Error>>;
 
+#[derive(Debug)]
+pub enum MoveT {
+    A,
+    B,
+    C,
+    X,
+    Y,
+    Z,
+}
+
 pub fn read_one_number_per_line(filename: &str) -> BoxResult<Vec<i32>> {
     let file = File::open(filename)?;
     let reader = BufReader::new(file);
@@ -23,10 +33,32 @@ pub fn read_on_number_per_line_with_gaps_to_negative_one(filename: &str) -> BoxR
 
     for line in reader.lines() {
         match line?.parse::<i32>() {
-            Err(_e) => {numbers.push(-1)},
-            Ok(n) => {numbers.push(n)}
+            Err(_e) => numbers.push(-1),
+            Ok(n) => numbers.push(n),
         }
     }
 
     Ok(numbers)
+}
+
+pub fn read_rock_paper_scissors_data_from_file(filename: &str) -> BoxResult<Vec<Vec<char>>> {
+    let file = File::open(filename)?;
+    let reader = BufReader::new(file);
+    let mut results: Vec<Vec<char>> = Vec::new();
+
+    for line in reader.lines() {
+        match line? {
+            s => {
+                let chars: Vec<char> = s.chars().collect();
+                let mut l: Vec<char> = Vec::new();
+                l.push(chars[0]);
+                l.push(chars[2]);
+
+                results.push(l);
+            }
+        }
+    }
+    // println!("Result = {:?}", results);
+
+    Ok(results)
 }

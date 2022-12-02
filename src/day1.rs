@@ -1,5 +1,6 @@
 use aoc_2022::*;
 
+/* Sum up the total calories for each of the elves, push to vector, and arrange by highest */
 fn calculate_total_calories_each(numbers: &Vec<i32>) -> Vec<i32> {
     let mut total_calories: Vec<i32> = Vec::new();
     let mut total = 0;
@@ -8,8 +9,7 @@ fn calculate_total_calories_each(numbers: &Vec<i32>) -> Vec<i32> {
         if *number == -1 {
             total_calories.push(total);
             total = 0;
-        }
-        else {
+        } else {
             total += number;
         }
     }
@@ -45,23 +45,11 @@ fn main() {
 #[cfg(test)]
 mod test {
     const NUMBER_VECTOR: [i32; 14] = [
-        1000,
-        2000,
-        3000,
-        -1,
-        4000,
-        -1,
-        5000,
-        6000,
-        -1,
-        7000,
-        8000,
-        9000,
-        -1,
-        10000];
+        1000, 2000, 3000, -1, 4000, -1, 5000, 6000, -1, 7000, 8000, 9000, -1, 10000,
+    ];
 
     #[test]
-        fn rday1_part1_test() {
+    fn day1_part1_test() {
         let result = crate::part1_answer(&NUMBER_VECTOR.to_vec());
         assert_eq!(result, 24000);
     }
