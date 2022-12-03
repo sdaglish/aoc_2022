@@ -69,3 +69,19 @@ pub fn read_rock_paper_scissors_data_from_file(filename: &str) -> BoxResult<Vec<
 * B = paper = 2
 * C = scissors = 3
  */
+
+pub fn read_strings_from_file(filename: &str) -> BoxResult<Vec<String>> {
+    let file = File::open(filename)?;
+    let reader = BufReader::new(file);
+    let mut results: Vec<String> = Vec::new();
+
+    for line in reader.lines() {
+        match line? {
+            s=> {
+                results.push(s);
+            }
+        }
+    }
+
+    return Ok(results);
+}
