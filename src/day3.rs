@@ -34,6 +34,49 @@ fn part1_answer(rucksack_strings: Vec<String>) -> u32 {
     return answer;
 }
 
+fn part2_answer(rucksacks: Vec<String>) -> u32 {
+    let mut answer = 0;
+
+    for group in rucksacks.chunks(3) {
+        // println!("group items: {:?}", group);
+
+        let mut items_checked_0:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
+        let mut items_checked_1:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
+        let mut items_checked_2:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
+
+        for item in group[0].chars() {
+            items_checked_0[item as usize - 65] = 1;
+        }
+        for item in group[1].chars() {
+            items_checked_1[item as usize - 65] = 1;
+        }
+        for item in group[2].chars() {
+            items_checked_2[item as usize - 65] = 1;
+        }
+
+        // println!("Items checked: {:?}", items_checked_0);
+        // println!("Items checked: {:?}", items_checked_1);
+        // println!("Items checked: {:?}", items_checked_2);
+
+        for i in (0 ..((26 * 2) + 6)) {
+            if (items_checked_0[i] > 0) && (items_checked_1[i] > 0) && (items_checked_2[i] > 0) {
+                // println!("Duplicate: {:?}", i);
+                if i < 26 {
+                    // Uppercase
+                    answer += ((i as u32) + 27);
+                }
+                else {
+                    // Lowercase
+                    answer += ((i as u32) - 26 - 5);
+                }
+            }
+        }
+    }
+
+
+    return answer;
+}
+
 fn main() {
     match aoc_2022::read_strings_from_file("data/day3_data.txt") {
         Err(e) => {
@@ -41,6 +84,15 @@ fn main() {
         }
         Ok(rucksack_strings) => {
             let result = crate::part1_answer(rucksack_strings);
+            println!("Day 3 part 1 answer: {}", result);
+        }
+    }
+    match aoc_2022::read_strings_from_file("data/day3_data.txt") {
+        Err(e) => {
+            println!("Error {}", e);
+        }
+        Ok(rucksack_strings) => {
+            let result = crate::part2_answer(rucksack_strings);
             println!("Day 3 part 1 answer: {}", result);
         }
     }
@@ -56,7 +108,7 @@ mod test {
                 assert_eq!(1, 0);
             }
             Ok(rucksack_strings) => {
-                println!("{:?}", rucksack_strings);
+                // println!("{:?}", rucksack_strings);
                 let result = crate::part1_answer(rucksack_strings);
                 assert_eq!(result, 157);
                 // println!("Day 2 part 1 answer: {}", result);
@@ -64,18 +116,18 @@ mod test {
         }
     }
 
-    // #[test]
-    // fn day2_part2_test() {
-    //     match aoc_2022::read_rock_paper_scissors_data_from_file("data/day2_test_data.txt") {
-    //         Err(e) => {
-    //             println!("Error {}", e);
-    //             assert_eq!(1, 0);
-    //         }
-    //         Ok(number_vector) => {
-    //             let result = crate::part2_answer(&number_vector);
-    //             assert_eq!(result, 12);
-    //             println!("Day 2 part 2 answer: {}", result);
-    //         }
-    //     }
-    // }
+    #[test]
+    fn day3_part2_test() {
+        match aoc_2022::read_strings_from_file("data/day3_test_data.txt") {
+            Err(e) => {
+                println!("Error {}", e);
+                assert_eq!(1, 0);
+            }
+            Ok(strings) => {
+                let result = crate::part2_answer(strings);
+                assert_eq!(result, 70);
+                println!("Day 3 part 2 answer: {}", result);
+            }
+        }
+    }
 }
