@@ -38,7 +38,6 @@ fn part2_answer(rucksacks: Vec<String>) -> u32 {
     let mut answer = 0;
 
     for group in rucksacks.chunks(3) {
-        // println!("group items: {:?}", group);
 
         let mut items_checked_0:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
         let mut items_checked_1:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
@@ -54,13 +53,8 @@ fn part2_answer(rucksacks: Vec<String>) -> u32 {
             items_checked_2[item as usize - 65] = 1;
         }
 
-        // println!("Items checked: {:?}", items_checked_0);
-        // println!("Items checked: {:?}", items_checked_1);
-        // println!("Items checked: {:?}", items_checked_2);
-
         for i in (0 ..((26 * 2) + 6)) {
             if (items_checked_0[i] > 0) && (items_checked_1[i] > 0) && (items_checked_2[i] > 0) {
-                // println!("Duplicate: {:?}", i);
                 if i < 26 {
                     // Uppercase
                     answer += ((i as u32) + 27);
@@ -108,10 +102,8 @@ mod test {
                 assert_eq!(1, 0);
             }
             Ok(rucksack_strings) => {
-                // println!("{:?}", rucksack_strings);
                 let result = crate::part1_answer(rucksack_strings);
                 assert_eq!(result, 157);
-                // println!("Day 2 part 1 answer: {}", result);
             }
         }
     }
@@ -126,7 +118,6 @@ mod test {
             Ok(strings) => {
                 let result = crate::part2_answer(strings);
                 assert_eq!(result, 70);
-                println!("Day 3 part 2 answer: {}", result);
             }
         }
     }
