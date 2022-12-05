@@ -1,4 +1,3 @@
-
 const LOST_SCORE: i32 = 0;
 const DRAW_SCORE: i32 = 3;
 const WIN_SCORE: i32 = 6;

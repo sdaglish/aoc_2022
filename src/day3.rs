@@ -1,10 +1,8 @@
 fn part1_answer(rucksack_strings: Vec<String>) -> u32 {
-    let mut answer:u32 = 0;
-    let mut rucksack_numbers: Vec<Vec<u32>> = Vec::new();
+    let mut answer: u32 = 0;
 
     for mut rucksack in rucksack_strings {
-
-        let mut items_checked:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
+        let mut items_checked: [u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
         let rucksack_size = rucksack.len();
         let second = rucksack.split_off(rucksack_size / 2);
 
@@ -21,11 +19,10 @@ fn part1_answer(rucksack_strings: Vec<String>) -> u32 {
             if *item > 0 {
                 if i < 26 {
                     // Uppercase
-                    answer += ((i as u32) + 27);
-                }
-                else {
+                    answer += (i as u32) + 27;
+                } else {
                     // Lowercase
-                    answer += ((i as u32) - 26 - 5);
+                    answer += (i as u32) - 26 - 5;
                 }
             }
         }
@@ -38,10 +35,9 @@ fn part2_answer(rucksacks: Vec<String>) -> u32 {
     let mut answer = 0;
 
     for group in rucksacks.chunks(3) {
-
-        let mut items_checked_0:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
-        let mut items_checked_1:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
-        let mut items_checked_2:[u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
+        let mut items_checked_0: [u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
+        let mut items_checked_1: [u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
+        let mut items_checked_2: [u32; ((26 * 2) + 6)] = [0; ((26 * 2) + 6)];
 
         for item in group[0].chars() {
             items_checked_0[item as usize - 65] = 1;
@@ -53,20 +49,18 @@ fn part2_answer(rucksacks: Vec<String>) -> u32 {
             items_checked_2[item as usize - 65] = 1;
         }
 
-        for i in (0 ..((26 * 2) + 6)) {
+        for i in 0..((26 * 2) + 6) {
             if (items_checked_0[i] > 0) && (items_checked_1[i] > 0) && (items_checked_2[i] > 0) {
                 if i < 26 {
                     // Uppercase
-                    answer += ((i as u32) + 27);
-                }
-                else {
+                    answer += (i as u32) + 27;
+                } else {
                     // Lowercase
-                    answer += ((i as u32) - 26 - 5);
+                    answer += (i as u32) - 26 - 5;
                 }
             }
         }
     }
-
 
     return answer;
 }

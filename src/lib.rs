@@ -77,7 +77,7 @@ pub fn read_strings_from_file(filename: &str) -> BoxResult<Vec<String>> {
 
     for line in reader.lines() {
         match line? {
-            s=> {
+            s => {
                 results.push(s);
             }
         }
@@ -85,4 +85,3 @@ pub fn read_strings_from_file(filename: &str) -> BoxResult<Vec<String>> {
 
     return Ok(results);
 }
-
