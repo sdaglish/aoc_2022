@@ -85,3 +85,79 @@ pub fn read_strings_from_file(filename: &str) -> BoxResult<Vec<String>> {
 
     return Ok(results);
 }
+
+fn get_current_stack_from_position(position: u32) -> u32 {
+    return (position / 4) + 1;
+}
+
+pub fn read_day_5_data_from_file(filename: &str) -> BoxResult<(Vec<Vec<char>>, Vec<[u32; 3]>)> {
+    let file = File::open(filename)?;
+    let reader = BufReader::new(file);
+    let mut initial_stack: Vec<Vec<char>> = Vec::new();
+    let mut moves: Vec<[u32; 3]> = Vec::new();
+    let mut working_on_stack = true;
+
+
+    println!("Stack: {:?}", initial_stack);
+
+
+    for line in reader.lines() {
+        match line? {
+            line => {
+                let characters: Vec<char> = line.chars().collect();
+                println!("words: {:?}", line);
+                if working_on_stack {
+                    for i in 0..characters.len() {
+                        print!("{}", characters[i]);
+                        if characters[i] == '[' {
+                            let current_stack = get_current_stack_from_position(i as u32);
+                            /* Making sure we have the correct amount of stacks */
+                            while ((initial_stack.len() as u32) < current_stack) {
+                                let new_stack: Vec<char> = Vec::new();
+                                initial_stack.push(new_stack);
+                            }
+                            initial_stack[(current_stack - 1) as usize].push(characters[i + 1]);
+                        } else if characters[1] == '1' {
+                            /* Working on moves */
+                            working_on_stack = false;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    /* Working on moves */
+                    let mut move_array: [u32; 3] = [0; 3];
+                    let mut move_array_index = 0;
+                    for word in line.split(' ') {
+                        match word.to_string().parse::<u32>() {
+                            Ok(number) => {
+                                move_array[move_array_index] = number;
+                                move_array_index += 1;
+                            },
+                            Err(_) => {}
+                        }
+                    }
+                    if move_array[0] != 0 {
+                        moves.push(move_array);
+                    }
+                }
+                println!("");
+            }
+        }
+    }
+
+    let mut initial_stack_2: Vec<Vec<char>> = Vec::new();
+    for mut stack in initial_stack {
+        let mut temp_stack: Vec<char> = Vec::new();
+        while !stack.is_empty() {
+            temp_stack.push(stack.pop().unwrap());
+        }
+        initial_stack_2.push(temp_stack);
+    }
+
+    // moves = moves.
+    println!("Stack: {:?}", initial_stack_2);
+    println!("Moves: {:?}", moves);
+
+    return Ok((initial_stack_2, moves));
+}
